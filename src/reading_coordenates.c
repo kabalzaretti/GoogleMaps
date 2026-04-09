@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include
+#include <houses.c>
 
 char* read_map(){ 
     char* map;
@@ -23,13 +23,13 @@ void posicio_origen(){
     }
 
     if (posicio == 2 || posicio == 3){
-        printf("Not implemented yet")
+        printf("Not implemented yet");
     }
     else if(posicio == 1){
         char coordenades[2][150];
         printf("Enter your adress and house number");
         scanf("%s %s",coordenades);
-        printf("")
+        printf("");
     }
     
     
