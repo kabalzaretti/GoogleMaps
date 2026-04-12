@@ -87,7 +87,7 @@ house* read_houses(char* map){
         new_house->house_number = final_number;
         new_house->latitude = final_latitude;
         new_house->longitude = final_longitude;
-        // we're going to create the linked list by placing each new house in front of the previous one.
+        // we're going to create the linked list by placing each new house in front of the previous one
         new_house->next = head;
         head = new_house;
     }
