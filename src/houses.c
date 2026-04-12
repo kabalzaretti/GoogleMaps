@@ -29,7 +29,7 @@ house* read_houses(char* map){
     char buffer[ADRESS_MAX_LENGHT];
     FILE* fp=fopen(file_path,"r");
     house* head = NULL; // we initialize the head of the linked list to null
- while(fgets(buffer,sizeof(buffer),fp)!=NULL){
+    while(fgets(buffer,sizeof(buffer),fp)!=NULL){
         //we create arrays to separate every part of the house
         char street_name[150];
         char text_number[20];
@@ -91,6 +91,6 @@ house* read_houses(char* map){
         new_house->next = head;
         head = new_house;
     }
-
+    return head;
 }
 
