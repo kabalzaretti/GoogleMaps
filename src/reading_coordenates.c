@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "reading_coordenates.h"
-#include "houses.c"
 
 
 // primer punto de lo que piden en el lab 2, lectura del mapa que se quiere usar
