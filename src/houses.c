@@ -1,6 +1,7 @@
 #include "houses.h"
 
-// función para obtener la ubicación del archivo de las casas dependiendo del mapa que se haya elegido
+
+//This function find the correct location of the file houses.txt depending on the selected map
 char* file_location(char* map){
     if(strcmp(map,"2xl_1") == 0) return "maps/2xl_1/houses.txt";
     else if(strcmp(map,"lg_1") == 0) return "maps/lg_1/houses.txt";
@@ -10,97 +11,66 @@ char* file_location(char* map){
     else if(strcmp(map,"xs_2") == 0) return "maps/xs_2/houses.txt";
     return NULL;
 }
-// función para leer las casas del archivo y guardarlas en una linked list
-house* read_houses(char* map){
-    char* file_path =file_location(map);
 
-    // si el archivo no se encuentra, mostramos un mensaje de error al usuario y retornamos NULL para indicar que no se pudieron cargar las casas
-    if(file_path == NULL) {
-        printf("Error: Map '%s' not found\n", map);
-        return NULL;
-    }
-
-    char buffer[ADRESS_MAX_LENGHT];
+Houses read_houses(char* map){
+    //Creating temporal variables
+    double latitude,longitude;
+    int number;
+    char street[ADRESS_MAX_LENGHT];
+    //We obtain the corresponding path of houses.txt
+    char* file_path=file_location(map);
+    
+    //We open the file
     FILE* fp=fopen(file_path,"r");
+    
+    // we initialize the head of the linked and tail of list to null
+    Houses houses_list;
+    houses_list.head=NULL;
+    houses_list.tail=NULL;
 
-    // si el archivo no se puede abrir, mostramos un mensaje de error al usuario y retornamos NULL para indicar que no se pudieron cargar las casas
-    if(fp == NULL) {
-        printf("Error: Could not open file %s\n", file_path);
-        return NULL;
+    //creating first node of the list
+    Adress* actual=malloc(sizeof(Adress));
+
+    //Readind and storing de first node of the list
+    fscanf(fp,"%[^,],%d,%lf,%lf",street,&number,&latitude,&longitude);
+    strcpy(actual->street,street);
+    actual->number=number;
+    actual->latitude=latitude;
+    actual->longitude=longitude;
+    actual->next=NULL;
+
+    //Head and tail point to first node
+    houses_list.head=actual;
+    houses_list.tail=actual;
+
+    //Adding all adresses
+    while(fscanf(fp," %[^,],%d,%lf,%lf",street,&number,&latitude,&longitude)==4){
+        //Creating next node
+        Adress* next=malloc(sizeof(Adress));
+        strcpy(next->street,street);
+        next->number=number;
+        next->latitude=latitude;
+        next->longitude=longitude;
+        next->next=NULL;
+
+        //Conecting acutal to next
+        actual->next=next;
+
+        //Changing next to actual and changing tail
+        actual=next;
+
+        //Tail must point to last node
+        houses_list.tail=actual;
+        
     }
-    house* head = NULL; // puntero a la cabeza de la linked list, inicialmente es NULL porque no hay ninguna casa leída todavía
-    while(fgets(buffer,sizeof(buffer),fp)!=NULL){
-        // creamos arrays para separar cada parte de la casa, la calle, el número, la latitud y la longitud
-        char street_name[150];
-        char text_number[20];
-        char text_latitude[30];
-        char text_longitude[30];
-
-        int i = 0; 
-        int j = 0;
-        // separamos cada parte usando loops y guardamos cada parte en una variable diferente
-        while (buffer[i] != ',' && buffer[i] != '\0') {
-            street_name[j] = buffer[i]; // guardamos el carácter actual en el array del nombre de la calle 
-            i++; 
-            j++;
-        }
-        street_name[j] = '\0'; // añadimos el carácter de fin de cadena al final del nombre de la calle para que sea una cadena de caracteres válida
-        i++; // saltamos la coma para empezar a leer el número de la casa 
-        j = 0; // reiniciamos j para usarlo en el siguiente array
-
-        // repetimos el mismo proceso para el número de la casa, la latitud y la longitud
-        while (buffer[i] != ',' && buffer[i] != '\0') {
-            text_number[j] = buffer[i]; 
-            i++; 
-            j++;
-        }
-        text_number[j] = '\0';
-        i++; // saltamos la coma para empezar a leer la latitud
-        j = 0; 
-
-        // repetimos el mismo proceso para la latitud y la longitud
-        while (buffer[i] != ',' && buffer[i] != '\0') {
-            text_latitude[j] = buffer[i];
-            i++; 
-            j++;
-        }
-        text_latitude[j] = '\0';
-        i++; // saltamos la coma para empezar a leer la longitud
-        j = 0;
-
-        // repetimos el mismo proceso para la longitud, ya no saltamos la coma porque es el último elemento de la línea
-        while (buffer[i] != '\n' && buffer[i] != '\0') {
-            text_longitude[j] = buffer[i];
-            i++; 
-            j++;
-        }
-        text_longitude[j] = '\0'; 
-
-        // convertimos el número de la casa, la latitud y la longitud de texto a sus respectivos tipos de datos para poder almacenarlos en la estructura de la casa
-        int final_number = atoi(text_number);
-        double final_latitude = atof(text_latitude);
-        double final_longitude = atof(text_longitude);
-
-        house* new_house = (house*) malloc(sizeof(house));
-        // guardamos cada parte correspondiente en la memoria abierta para esa casa en particular, usando strcpy para copiar el nombre de la calle porque es una cadena de caracteres y asignando directamente el número, la latitud y la longitud porque son tipos de datos primitivos
-        strcpy(new_house->street_name, street_name);
-        new_house->house_number = final_number;
-        new_house->latitude = final_latitude;
-        new_house->longitude = final_longitude;
-        // creamos una nueva lista enlazada colocando cada nueva casa al frente de la anterior
-        // we're going to create the linked list by placing each new house in front of the previous one
-        new_house->next = head;
-        head = new_house;
-    }
-    fclose(fp); // cerramos el archivo después de leer todas las casas para liberar recursos
-    return head;
+    fclose(fp);
+    return houses_list;
 }
-
 // función para liberar la memoria de la linked list de casas, recorriendo la lista y liberando cada nodo uno por uno
-void free_houses(house* head) {
-    house* current = head; 
+void free_houses(Houses* houses_list) {
+    Adress* current = houses_list->head; 
     while (current != NULL) { // mientras no lleguemos al final de la lista, seguimos liberando memoria
-        house* temp = current;
+        Adress* temp = current;
         current = current->next;
         free(temp);
     }
