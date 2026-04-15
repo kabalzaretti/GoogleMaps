@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "reading_coordenates.h"
+#include "houses.c"
 
 
 // primer punto de lo que piden en el lab 2, lectura del mapa que se quiere usar
@@ -14,13 +15,12 @@ void read_map(char map[]){
     }
 }
 
-// tercer punto de "notes", lectura de las coordenadas de las casas secuencial y guardarlas en una linked list
-void sequential_search(house* head, char street[], int number){
-    house* current = head;
+void sequential_search(Houses* houeses_list, char street[], int number){
+    Adress* current = houeses_list->head;
     int found = 0;
     while(current != NULL){
-        if(strcmp(street, current->street_name) == 0 && number == current->house_number){
-            printf("Found at (%.6f, %.6f)\n", current->latitude, current->longitude); // si encontramos la casa, mostramos sus coordenadas al usuario
+        if(strcmp(street, current->street) == 0 && number == current->number){
+            printf("Found at (%lf, %lf)", current->latitude, current->longitude);
             found = 1;
             break;
         }
@@ -31,8 +31,7 @@ void sequential_search(house* head, char street[], int number){
     }
 }
 
-// segundo, tercer y cuarto punto
-void origin_position(house *head){
+void origin_position(Houses *houses_list){
     int posicio;
     printf("Where are you? Address (1), Place (2) or Coordinate (3)?"); // segundo punto, se pide al usuario su posición de origen, si es dirección, lugar o coordenada
     scanf("%d",&posicio);
@@ -53,6 +52,6 @@ void origin_position(house *head){
 
         printf("Enter street number (e.g. '138'): ");
         scanf("%d", &number);
-        sequential_search(head, street, number);
+        sequential_search(houses_list->head, street, number);
     }
 }
