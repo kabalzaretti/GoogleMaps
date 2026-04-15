@@ -53,6 +53,6 @@ void origin_position(Houses *houses_list){
 
         printf("Enter street number (e.g. '138'): ");
         scanf("%d", &number);
-        sequential_search(houses_list->head, street, number);
+        sequential_search(houses_list, street, number);
     }
 }

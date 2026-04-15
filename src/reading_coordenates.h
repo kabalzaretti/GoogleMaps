@@ -6,7 +6,7 @@
 #include "houses.h"
 
 void read_map(char map[]);
-struct house* sequential_search(struct house* head, char street[], int number);
-void origin_position(struct house *head);
+void sequential_search(Houses* houses_list, char street[], int number);
+void origin_position(Houses *houses_list);
 
 #endif
