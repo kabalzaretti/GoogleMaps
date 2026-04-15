@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "houses.h"
 #include "reading_coordenates.h"
 
 
@@ -10,7 +9,7 @@ void read_map(char map[]){
     printf("Enter map name (e.g. 'xs_2' or 'xl_1'): ");
     scanf("%s",map);
     while(strcmp(map, "xs_1") != 0 && strcmp(map, "xs_2") != 0 && strcmp(map, "md_1") != 0 && strcmp(map, "lg_1") != 0 && strcmp(map, "xl_1") != 0 && strcmp(map, "2xl_1") != 0){   
-        printf("Arxive not correct, please repeat");
+        printf("Archive not correct, please repeat");
         scanf("%s",map);
     }
 }
@@ -21,14 +20,14 @@ void sequential_search(house* head, char street[], int number){
     int found = 0;
     while(current != NULL){
         if(strcmp(street, current->street_name) == 0 && number == current->house_number){
-            printf("Found at (%lf, %lf)", current->latitude, current->longitude);
+            printf("Found at (%.6f, %.6f)\n", current->latitude, current->longitude); // si encontramos la casa, mostramos sus coordenadas al usuario
             found = 1;
             break;
         }
         current = current->next;
     }
-    if(found == 0){
-        printf("ERROR: adress not found in the map");
+    if(found == 0){ // si no encontramos la casa, mostramos un mensaje de error al usuario
+        printf("ERROR: adress not found in the map/\n");
     }
 }
 
