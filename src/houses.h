@@ -11,17 +11,21 @@
 #define MAX_PATH_NAME 20
 
 // definim la estructura de la casa, con su calle, número, latitud, longitud y un puntero a la siguiente casa para crear la linked list
-typedef struct house_node {
-    char street_name[100];
-    int house_number;
+typedef struct Adress {
+    char street[ADRESS_MAX_LENGHT];
+    int number;
     double latitude;
     double longitude;
-    struct house_node* next;
-}house;
+    struct Adress* next;
+}Adress;
 
+typedef struct{
+    Adress* head;
+    Adress* tail;
+}Houses;
 
-void free_houses(house* head);
+void free_houses(Houses* head);
 char* file_location(char* map); 
-house* read_houses(char* map);
+Houses read_houses(char* map);
 
 #endif
