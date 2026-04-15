@@ -2,19 +2,32 @@
 
 // función para obtener la ubicación del archivo de las casas dependiendo del mapa que se haya elegido
 char* file_location(char* map){
-    if(strcmp(map,"2xl_1") == 0) return "../maps/2xl_1/houses.txt";
-    else if(strcmp(map,"lg_1") == 0) return "../maps/lg_1/houses.txt";
-    else if(strcmp(map,"md_1") == 0) return "../maps/md_1/houses.txt";
-    else if(strcmp(map,"xl_1") == 0) return "../maps/xl_1/houses.txt";
-    else if(strcmp(map,"xs_1") == 0) return "../maps/xs_1/houses.txt";
-    else if(strcmp(map,"xs_2") == 0) return "../maps/xs_2/houses.txt";
+    if(strcmp(map,"2xl_1") == 0) return "maps/2xl_1/houses.txt";
+    else if(strcmp(map,"lg_1") == 0) return "maps/lg_1/houses.txt";
+    else if(strcmp(map,"md_1") == 0) return "maps/md_1/houses.txt";
+    else if(strcmp(map,"xl_1") == 0) return "maps/xl_1/houses.txt";
+    else if(strcmp(map,"xs_1") == 0) return "maps/xs_1/houses.txt";
+    else if(strcmp(map,"xs_2") == 0) return "maps/xs_2/houses.txt";
     return NULL;
 }
 // función para leer las casas del archivo y guardarlas en una linked list
 house* read_houses(char* map){
     char* file_path =file_location(map);
+
+    // si el archivo no se encuentra, mostramos un mensaje de error al usuario y retornamos NULL para indicar que no se pudieron cargar las casas
+    if(file_path == NULL) {
+        printf("Error: Map '%s' not found\n", map);
+        return NULL;
+    }
+
     char buffer[ADRESS_MAX_LENGHT];
     FILE* fp=fopen(file_path,"r");
+
+    // si el archivo no se puede abrir, mostramos un mensaje de error al usuario y retornamos NULL para indicar que no se pudieron cargar las casas
+    if(fp == NULL) {
+        printf("Error: Could not open file %s\n", file_path);
+        return NULL;
+    }
     house* head = NULL; // puntero a la cabeza de la linked list, inicialmente es NULL porque no hay ninguna casa leída todavía
     while(fgets(buffer,sizeof(buffer),fp)!=NULL){
         // creamos arrays para separar cada parte de la casa, la calle, el número, la latitud y la longitud
