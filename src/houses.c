@@ -83,3 +83,12 @@ house* read_houses(char* map){
     return head;
 }
 
+// función para liberar la memoria de la linked list de casas, recorriendo la lista y liberando cada nodo uno por uno
+void free_houses(house* head) {
+    house* current = head; 
+    while (current != NULL) { // mientras no lleguemos al final de la lista, seguimos liberando memoria
+        house* temp = current;
+        current = current->next;
+        free(temp);
+    }
+}

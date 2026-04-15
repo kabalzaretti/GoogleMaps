@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "houses.c"
+#include "houses.h"
+#include "reading_coordenates.h"
+
 
 // primer punto de lo que piden en el lab 2, lectura del mapa que se quiere usar
 void read_map(char map[]){ 

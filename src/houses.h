@@ -19,6 +19,8 @@ typedef struct house_node {
     struct house_node* next;
 }house;
 
+
+void free_houses(house* head);
 char* file_location(char* map); 
 house* read_houses(char* map);
 
