@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "reading_coordenates.h"
-#include "houses.c"
 
 
 // primer punto de lo que piden en el lab 2, lectura del mapa que se quiere usar
@@ -14,6 +13,7 @@ void read_map(char map[]){
         scanf("%s",map);
     }
 }
+
 
 void sequential_search(Houses* houeses_list, char street[], int number){
     Adress* current = houeses_list->head;
@@ -31,6 +31,7 @@ void sequential_search(Houses* houeses_list, char street[], int number){
     }
 }
 
+// segundo, tercer y cuarto punto del lab 2
 void origin_position(Houses *houses_list){
     int posicio;
     printf("Where are you? Address (1), Place (2) or Coordinate (3)?"); // segundo punto, se pide al usuario su posición de origen, si es dirección, lugar o coordenada
