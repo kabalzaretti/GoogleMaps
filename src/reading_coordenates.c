@@ -13,7 +13,7 @@ void read_map(char map[]){
     }
 }
 
-// segundo punto, lectura de las coordenadas de las casas y guardarlas en una linked list
+// tercer punto de "notes", lectura de las coordenadas de las casas secuencial y guardarlas en una linked list
 void sequential_search(house* head, char street[], int number){
     house* current = head;
     int found = 0;
@@ -30,10 +30,10 @@ void sequential_search(house* head, char street[], int number){
     }
 }
 
-// tercer y cuarto punto, pedir al usuario su posición de origen y buscarla en la linked list
+// segundo, tercer y cuarto punto
 void origin_position(house *head){
     int posicio;
-    printf("Where are you? Address (1), Place (2) or Coordinate (3)?");
+    printf("Where are you? Address (1), Place (2) or Coordinate (3)?"); // segundo punto, se pide al usuario su posición de origen, si es dirección, lugar o coordenada
     scanf("%d",&posicio);
     while(posicio != 1 && posicio != 2 && posicio != 3){
         printf("Answer not valid, please repeat");

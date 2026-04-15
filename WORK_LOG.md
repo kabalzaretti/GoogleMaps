@@ -10,7 +10,7 @@ Feel free to log the progress each member made in each session.
 
 ## Lab 2
 
-- `<Carlo Balzaretti>`: tasks description
+- `<Carlo Balzaretti>`: creado houss.h y , añadido comentarios, corregido algunos errores
 - `<name2>`: tasks description
 - `<name3>`: tasks description
 

@@ -1,18 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-#define ADRESS_MAX_LENGHT 150
-#define MAX_PATH_NAME 20
-
-// definim la estructura de la casa, con su calle, número, latitud, longitud y un puntero a la siguiente casa para crear la linked list
-typedef struct house_node {
-    char street_name[100];
-    int house_number;
-    double latitude;
-    double longitude;
-    struct house_node* next;
-}house;
+#include "houses.h"
 
 // función para obtener la ubicación del archivo de las casas dependiendo del mapa que se haya elegido
 char* file_location(char* map){
@@ -24,7 +10,6 @@ char* file_location(char* map){
     else if(strcmp(map,"xs_2") == 0) return "../maps/xs_2/houses.txt";
     return NULL;
 }
-
 // función para leer las casas del archivo y guardarlas en una linked list
 house* read_houses(char* map){
     char* file_path =file_location(map);
@@ -94,6 +79,7 @@ house* read_houses(char* map){
         new_house->next = head;
         head = new_house;
     }
+    fclose(fp); // cerramos el archivo después de leer todas las casas para liberar recursos
     return head;
 }
 
