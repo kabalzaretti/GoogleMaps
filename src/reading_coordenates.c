@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "houses.c"
 
+// primer punto de lo que piden en el lab 2, lectura del mapa que se quiere usar
 void read_map(char map[]){ 
     printf("Enter map name (e.g. 'xs_2' or 'xl_1'): ");
     scanf("%s",map);
@@ -12,6 +13,7 @@ void read_map(char map[]){
     }
 }
 
+// segundo punto, lectura de las coordenadas de las casas y guardarlas en una linked list
 void sequential_search(house* head, char street[], int number){
     house* current = head;
     int found = 0;
@@ -28,6 +30,7 @@ void sequential_search(house* head, char street[], int number){
     }
 }
 
+// tercer y cuarto punto, pedir al usuario su posición de origen y buscarla en la linked list
 void origin_position(house *head){
     int posicio;
     printf("Where are you? Address (1), Place (2) or Coordinate (3)?");
@@ -38,9 +41,9 @@ void origin_position(house *head){
     }
 
     if (posicio == 2 || posicio == 3){
-        printf("Not implemented yet\n");
+        printf("Not implemented yet\n"); // tercer punto, si escoge lugar o coordenada, no se implementa nada, solo se muestra un mensaje
     }
-    else if(posicio == 1){
+    else if(posicio == 1){ // cuarto punto, si escoge dirección, se pide la calle y el número y se busca en la linked list y se muestran las coordenadas
         char street[150];
         int number;
         printf("Enter street name (e.g. 'Carrer de Roc Boronat'): ");
