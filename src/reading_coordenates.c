@@ -14,6 +14,7 @@ void read_map(char map[]){
     }
 }
 
+
 void sequential_search(Houses* houeses_list, char street[], int number){
     Adress* current = houeses_list->head;
     int found = 0;
@@ -30,6 +31,7 @@ void sequential_search(Houses* houeses_list, char street[], int number){
     }
 }
 
+// segundo, tercer y cuarto punto del lab 2
 void origin_position(Houses *houses_list){
     int posicio;
     printf("Where are you? Address (1), Place (2) or Coordinate (3)?"); // segundo punto, se pide al usuario su posición de origen, si es dirección, lugar o coordenada

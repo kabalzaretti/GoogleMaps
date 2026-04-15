@@ -10,7 +10,7 @@
 #define ADRESS_MAX_LENGHT 150
 #define MAX_PATH_NAME 20
 
-// definim la estructura de la casa, con su calle, número, latitud, longitud y un puntero a la siguiente casa para crear la linked list
+// definimos la estructura de la casa, con su calle, número, latitud, longitud y un puntero a la siguiente casa para crear la linked list
 typedef struct Adress {
     char street[ADRESS_MAX_LENGHT];
     int number;
