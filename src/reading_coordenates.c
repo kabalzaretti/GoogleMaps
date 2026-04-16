@@ -17,9 +17,18 @@ void read_map(char map[]){
 
 void sequential_search(Houses* houeses_list, char street[], int number){
     Adress* current = houeses_list->head;
+    char temp_adress[150];
     int found = 0;
     while(current != NULL){
-        if(strcmp(street, current->street) == 0 && number == current->number){
+
+        //Transforming street name in to lowercase
+        lowercase_transform(street);
+
+        strcpy(temp_adress,current->street);
+        lowercase_transform(temp_adress);
+
+
+        if(strcmp(street, temp_adress) == 0 && number == current->number){
             printf("Found at (%lf, %lf)", current->latitude, current->longitude);
             found = 1;
             break;
@@ -48,11 +57,23 @@ void origin_position(Houses *houses_list){
         char street[150];
         int number;
         printf("Enter street name (e.g. 'Carrer de Roc Boronat'): ");
-        fgets(street, 150, stdin);
-        street[strcspn(street, "\n")] = '\0';
+        scanf("%s",street);
+        
 
         printf("Enter street number (e.g. '138'): ");
         scanf("%d", &number);
         sequential_search(houses_list, street, number);
+    }
+}
+
+
+//axuliar function that transform letter from a string from uppercase to lower case
+void lowercase_transform(char* str){
+    for(int i=0; i<strlen(str);i++){
+        //Si el caracter esta en mayuscula entre 65 y 90 en la tabla ascii la cambiamos a minusculas
+        if (str[i]>='A' && str[i]<='Z'){
+            //We add 32 to transform in to lowercase
+            str[i]=str[i]+32;
+        }
     }
 }
