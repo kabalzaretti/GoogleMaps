@@ -50,8 +50,15 @@ void origin_position(Houses *houses_list){
         scanf("%d",&posicio);
     }
 
-    if (posicio == 2 || posicio == 3){
-        printf("Not implemented yet\n"); // tercer punto, si escoge lugar o coordenada, no se implementa nada, solo se muestra un mensaje
+    if (posicio == 2){
+        char place[ADRESS_MAX_LENGHT];
+        printf("Enter place name (e.g. 'Universitat Pompeu Fabra–Campus del Poblenou' or 'L'Illa Diagonal'): ");
+        scanf("%s", place);
+        
+    }
+
+    else if (posicio == 3){
+        printf("Not implemented yet\n"); // tercer punto,coordenada, no se implementa nada, solo se muestra un mensaje
     }
     else if(posicio == 1){ // cuarto punto, si escoge dirección, se pide la calle y el número y se busca en la linked list y se muestran las coordenadas
         char street[150];

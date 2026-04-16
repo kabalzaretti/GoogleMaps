@@ -1,35 +1,37 @@
-#include "houses.h"
+#include <stdio.h>
+#include "places.h"
+#include <stdlib.h>
+#include <string.h>
 
-
-// función para obtener la ruta del archivo de las houses según el mapa elegido por el usuario
-char* file_location_house(char* map){
-    if(strcmp(map,"2xl_1") == 0) return "../maps/2xl_1/houses.txt";
-    else if(strcmp(map,"lg_1") == 0) return "../maps/lg_1/houses.txt";
-    else if(strcmp(map,"md_1") == 0) return "../maps/md_1/houses.txt";
-    else if(strcmp(map,"xl_1") == 0) return "../maps/xl_1/houses.txt";
-    else if(strcmp(map,"xs_1") == 0) return "../maps/xs_1/houses.txt";
-    else if(strcmp(map,"xs_2") == 0) return "../maps/xs_2/houses.txt";
+// función para obtener la ruta del archivo de los places según el mapa elegido por el usuario
+char* file_location_place(char* map){
+    if(strcmp(map,"2xl_1") == 0) return "../maps/2xl_1/places.txt";
+    else if(strcmp(map,"lg_1") == 0) return "../maps/lg_1/places.txt";
+    else if(strcmp(map,"md_1") == 0) return "../maps/md_1/places.txt";
+    else if(strcmp(map,"xl_1") == 0) return "../maps/xl_1/places.txt";
+    else if(strcmp(map,"xs_1") == 0) return "../maps/xs_1/places.txt";
+    else if(strcmp(map,"xs_2") == 0) return "../maps/xs_2/places.txt";
     return NULL;
 }
 
-Houses read_houses(char* map){
+Places read_places(char* map){
     // variables para almacenar temporalmente los datos de cada casa mientras se leen del archivo
     double latitude,longitude;
     int number;
     char street[ADRESS_MAX_LENGHT];
     // obtenemos la ruta del archivo de las casas según el mapa elegido por el usuario
-    char* file_path=file_location_house(map);
+    char* file_path=file_location_place(map);
     
     // abrimos el archivo de las casas para lectura
     FILE* fp=fopen(file_path,"r");
     
     // creamos la linked list de casas, inicializando el head y tail a NULL
-    Houses houses_list;
-    houses_list.head=NULL;
-    houses_list.tail=NULL;
+    Places place_list;
+    place_list.head=NULL;
+    place_list.tail=NULL;
 
     // creamos un nodo temporal para almacenar la información de cada casa mientras se lee del archivo, y luego lo añadimos a la linked list
-    Adress* actual=malloc(sizeof(Adress));
+    Direction* actual=malloc(sizeof(Direction));
 
     // leyendo y almacenando el primer nodo de la lista
     fscanf(fp,"%[^,],%d,%lf,%lf",street,&number,&latitude,&longitude);
@@ -40,13 +42,13 @@ Houses read_houses(char* map){
     actual->next=NULL;
 
     // inicializamos el head y tail de la linked list con el primer nodo leído del archivo
-    houses_list.head=actual;
-    houses_list.tail=actual;
+    place_list.head=actual;
+    place_list.tail=actual;
 
     // leemos el resto de nodos del archivo, creando un nuevo nodo para cada casa y añadiéndolo al final de la linked list
     while(fscanf(fp," %[^,],%d,%lf,%lf",street,&number,&latitude,&longitude)==4){
         // creamos un nuevo nodo para la casa leída del archivo
-        Adress* next=malloc(sizeof(Adress));
+        Direction* next=malloc(sizeof(Direction));
         strcpy(next->street,street);
         next->number=number;
         next->latitude=latitude;
@@ -60,18 +62,9 @@ Houses read_houses(char* map){
         actual=next;
 
         // actualizamos el tail de la linked list al nuevo nodo añadido, para mantener el tail apuntando al último nodo de la lista
-        houses_list.tail=actual;
+        place_list.tail=actual;
         
     }
     fclose(fp);
-    return houses_list;
-}
-// función para liberar la memoria de la linked list de casas, recorriendo la lista y liberando cada nodo uno por uno
-void free_houses(Houses* houses_list) {
-    Adress* current = houses_list->head; 
-    while (current != NULL) { // mientras no lleguemos al final de la lista, seguimos liberando memoria
-        Adress* temp = current;
-        current = current->next;
-        free(temp);
-    }
+    return place_list;
 }

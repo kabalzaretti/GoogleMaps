@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "houses.h"
 #include "reading_coordenates.h"
+#include "places.h"
 
 int main() {
     // mensaje de bienvenida
