@@ -16,9 +16,19 @@ void read_map(char map[]){
 
 
 void sequential_search(Houses* houeses_list, char street[], int number){
+    //Temporal variables inicialitzation
     Adress* current = houeses_list->head;
     char temp_adress[150];
+    int option_number;
+
+    //Array to store the possible valid numbers
+    int *valid_numbers=malloc(sizeof(int));
+    int size_of_valid_numbers=0;
+
+    //Control variable to know if the street was founded but not the number
     int found = 0;
+
+    //Startintg to interated in linked list
     while(current != NULL){
 
         //Transforming street name in to lowercase
@@ -31,14 +41,30 @@ void sequential_search(Houses* houeses_list, char street[], int number){
         transform_abbreviations(temp_adress);
 
 
-        if(strcmp(street, temp_adress) == 0 && number == current->number){
-            printf("Found at (%lf, %lf)", current->latitude, current->longitude);
-            found = 1;
-            break;
+        if(strcmp(street, temp_adress) == 0){
+            found=1;
+            if(number == current->number){
+                printf("Found at (%lf, %lf)", current->latitude, current->longitude);
+                break;
+            }else{//If is not the number we store it in an array
+                size_of_valid_numbers++;
+                valid_numbers=realloc(valid_numbers,sizeof(int)*size_of_valid_numbers);
+                valid_numbers[size_of_valid_numbers-1]=current->number;
+            }
+           
         }
         current = current->next;
     }
-    if(found == 0){ // si no encontramos la casa, mostramos un mensaje de error al usuario
+    if(found == 1){ //If we found the street but not the number we show the possible numbers to the user
+        printf("The introduced number was not found. Please choose one of the following numbers: ");
+        for(int i=0;i<(size_of_valid_numbers-1);i++){
+            printf(" %d |",valid_numbers[i]);
+        }
+        printf(" %d\n",valid_numbers[size_of_valid_numbers-1]);
+        scanf("%d",&option_number);
+        sequential_search(houeses_list,street,option_number);
+    }
+    else{// si no encontramos la casa, mostramos un mensaje de error al usuario
         printf("ERROR: adress not found in the map/\n");
     }
 }
