@@ -3,12 +3,12 @@
 
 // función para obtener la ruta del archivo de las casas según el mapa elegido por el usuario
 char* file_location(char* map){
-    if(strcmp(map,"2xl_1") == 0) return "maps/2xl_1/houses.txt";
-    else if(strcmp(map,"lg_1") == 0) return "maps/lg_1/houses.txt";
-    else if(strcmp(map,"md_1") == 0) return "maps/md_1/houses.txt";
-    else if(strcmp(map,"xl_1") == 0) return "maps/xl_1/houses.txt";
-    else if(strcmp(map,"xs_1") == 0) return "maps/xs_1/houses.txt";
-    else if(strcmp(map,"xs_2") == 0) return "maps/xs_2/houses.txt";
+    if(strcmp(map,"2xl_1") == 0) return "../maps/2xl_1/houses.txt";
+    else if(strcmp(map,"lg_1") == 0) return "../maps/lg_1/houses.txt";
+    else if(strcmp(map,"md_1") == 0) return "../maps/md_1/houses.txt";
+    else if(strcmp(map,"xl_1") == 0) return "../maps/xl_1/houses.txt";
+    else if(strcmp(map,"xs_1") == 0) return "../maps/xs_1/houses.txt";
+    else if(strcmp(map,"xs_2") == 0) return "../maps/xs_2/houses.txt";
     return NULL;
 }
 
