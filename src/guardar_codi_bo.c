@@ -1,21 +1,4 @@
-#include <stdio.h>
-#include "places.h"
-#include <stdlib.h>
-#include <string.h>
-
-// función para obtener la ruta del archivo de los places según el mapa elegido por el usuario
-char* file_location_place(char* map){
-    if(strcmp(map,"2xl_1") == 0) return "../maps/2xl_1/places.txt";
-    else if(strcmp(map,"lg_1") == 0) return "../maps/lg_1/places.txt";
-    else if(strcmp(map,"md_1") == 0) return "../maps/md_1/places.txt";
-    else if(strcmp(map,"xl_1") == 0) return "../maps/xl_1/places.txt";
-    else if(strcmp(map,"xs_1") == 0) return "../maps/xs_1/places.txt";
-    else if(strcmp(map,"xs_2") == 0) return "../maps/xs_2/places.txt";
-    return NULL;
-}
-
-Places read_places(char* map){
-  // variables para almacenar temporalmente los datos de cada casa mientras se leen del archivo
+// variables para almacenar temporalmente los datos de cada casa mientras se leen del archivo
     double latitude,longitude;
     char name[ADRESS_MAX_LENGHT];
     char id[MAX_LENGTH_ID];
@@ -50,7 +33,7 @@ Places read_places(char* map){
     place_list.counter++; 
 
     // leemos el resto de nodos del archivo, creando un nuevo nodo para cada casa y añadiéndolo al final de la linked list
-    while(fscanf(fp," %[^,],%[^,],%[^,],%lf,%lf",id ,name,category,&latitude,&longitude)==5){
+    while(fscanf(fp," %[^,],%[^,],%[^,]%lf,%lf",id ,name,category,&latitude,&longitude)==5){
         // creamos un nuevo nodo para la casa leída del archivo
         Direction* next=malloc(sizeof(Direction));
         strcpy(next->name, name);
@@ -70,6 +53,7 @@ Places read_places(char* map){
         place_list.tail=actual;
         place_list.counter++;
 
+        
     }
     fclose(fp);
     return place_list;

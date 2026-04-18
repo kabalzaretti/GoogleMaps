@@ -4,9 +4,10 @@
 #define READING_COORDENATES_H
 
 #include "houses.h"
+#include "places.h"
 
 void read_map(char map[]);
-void sequential_search(Houses* houses_list, char street[], int number);
-void origin_position(Houses *houses_list);
+void sequential_search_houses(Houses* houses_list, char street[], int number);
+void origin_position(Houses *houses_list, Places *places_list);
 
 #endif

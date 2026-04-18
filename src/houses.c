@@ -23,10 +23,13 @@ Houses read_houses(char* map){
     // abrimos el archivo de las casas para lectura
     FILE* fp=fopen(file_path,"r");
     
-    // creamos la linked list de casas, inicializando el head y tail a NULL
+    // creamos la linked list de casas, inicializando el head y tail a NULL, y counter a 0
     Houses houses_list;
     houses_list.head=NULL;
     houses_list.tail=NULL;
+    houses_list.counter = 0; //ponemos el contador en el struct para poder ir sumando 1 cada vez que añadimos una casa
+    // y así es mucho mas eficiente acceder en el main solo al counter (O(1)) que en el main recorrer toda la linked
+    // list que seria una complejidad O(n) de muchos parametros
 
     // creamos un nodo temporal para almacenar la información de cada casa mientras se lee del archivo, y luego lo añadimos a la linked list
     Adress* actual=malloc(sizeof(Adress));
@@ -39,9 +42,10 @@ Houses read_houses(char* map){
     actual->longitude=longitude;
     actual->next=NULL;
 
-    // inicializamos el head y tail de la linked list con el primer nodo leído del archivo
+    // inicializamos el head y tail de la linked list con el primer nodo leído del archivo y sumamos 1 a counter
     houses_list.head=actual;
     houses_list.tail=actual;
+    houses_list.counter++;
 
     // leemos el resto de nodos del archivo, creando un nuevo nodo para cada casa y añadiéndolo al final de la linked list
     while(fscanf(fp," %[^,],%d,%lf,%lf",street,&number,&latitude,&longitude)==4){
@@ -61,6 +65,7 @@ Houses read_houses(char* map){
 
         // actualizamos el tail de la linked list al nuevo nodo añadido, para mantener el tail apuntando al último nodo de la lista
         houses_list.tail=actual;
+        houses_list.counter++;
         
     }
     fclose(fp);

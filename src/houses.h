@@ -23,6 +23,7 @@ typedef struct Adress {
 typedef struct{
     Adress* head;
     Adress* tail;
+    int counter;
 }Houses;
 
 void free_houses(Houses* head);
