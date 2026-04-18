@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include "reading_coordenates.h"
 
+void transform_abbreviations (char* str);
+void lowercase_transform(char* str);
 
 // primer punto de lo que piden en el lab 2, lectura del mapa que se quiere usar
 void read_map(char map[]){ 
@@ -18,7 +20,7 @@ void read_map(char map[]){
 void sequential_search(Houses* houeses_list, char street[], int number){
     //Temporal variables inicialitzation
     Adress* current = houeses_list->head;
-    char temp_adress[150];
+    char temp_adress[450];
     int option_number;
 
     //Array to store the possible valid numbers
@@ -45,6 +47,7 @@ void sequential_search(Houses* houeses_list, char street[], int number){
             found=1;
             if(number == current->number){
                 printf("Found at (%lf, %lf)", current->latitude, current->longitude);
+                found=2;
                 break;
             }else{//If is not the number we store it in an array
                 size_of_valid_numbers++;
@@ -61,10 +64,11 @@ void sequential_search(Houses* houeses_list, char street[], int number){
             printf(" %d |",valid_numbers[i]);
         }
         printf(" %d\n",valid_numbers[size_of_valid_numbers-1]);
+        free(valid_numbers);
         scanf("%d",&option_number);
         sequential_search(houeses_list,street,option_number);
     }
-    else{// si no encontramos la casa, mostramos un mensaje de error al usuario
+    else if(found==0){// si no encontramos la casa, mostramos un mensaje de error al usuario
         printf("ERROR: adress not found in the map/\n");
     }
 }
@@ -98,7 +102,7 @@ void origin_position(Houses *houses_list){
 
 //axuliar function that transform letter from a string from uppercase to lower case
 void lowercase_transform(char* str){
-    for(int i=0; i<strlen(str);i++){
+    for(size_t i=0; i<strlen(str);i++){
         //Si el caracter esta en mayuscula entre 65 y 90 en la tabla ascii la cambiamos a minusculas
         if (str[i]>='A' && str[i]<='Z'){
             //We add 32 to transform in to lowercase
@@ -108,6 +112,9 @@ void lowercase_transform(char* str){
 }
 
 void transform_abbreviations (char* str){
+    
+    //Calculate the string lenght
+    size_t len=strlen(str);
     //we do a temporal copy de entring string 
     char temp_copy[150];
     strcpy(temp_copy,str);
@@ -124,7 +131,7 @@ void transform_abbreviations (char* str){
 
     if(strcmp(avrebiation,"c.")==0){
         //Desplazamos el array 4 posiciones hacia adelante paraa poder subtitutir la avrebiatura por el nombre completo
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+4]=temp_copy[i];
         }
 
@@ -132,7 +139,7 @@ void transform_abbreviations (char* str){
         str[0]='c'; str[1]='a'; str[2]='r'; str[3]='r'; str[4]='e'; str[5]='r';
     }
     else if(strcmp(avrebiation,"av.")==0){
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+5]=temp_copy[i];
         }
 
@@ -140,7 +147,7 @@ void transform_abbreviations (char* str){
         str[0]='a'; str[1]='v'; str[2]='i'; str[3]='n'; str[4]='g'; str[5]='u'; str[6]='d'; str[7]='a';
     }
     else if(strcmp(avrebiation,"pg.")==0){
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+4]=temp_copy[i];
         }
 
@@ -148,16 +155,16 @@ void transform_abbreviations (char* str){
         str[0]='p'; str[1]='a'; str[2]='s'; str[3]='s'; str[4]='e'; str[5]='i'; str[6]='g';
     }
     else if(strcmp(avrebiation,"ptge.")==0){
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+3]=temp_copy[i];
         }
 
         //Substituimos la abrevacion
-        str[0]='p'; str[1]='a'; str[2]='s'; str[3]='s'; str[4]='a'; str[5]='t'; str[6]='g'; str[6]='e';
+        str[0]='p'; str[1]='a'; str[2]='s'; str[3]='s'; str[4]='a'; str[5]='t'; str[6]='g'; str[7]='e';
     }
 
     else if(strcmp(avrebiation,"rda.")==0){
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+1]=temp_copy[i];
         }
 
@@ -165,7 +172,7 @@ void transform_abbreviations (char* str){
         str[0]='r'; str[1]='o'; str[2]='n'; str[3]='d'; str[4]='a'; 
     }
     else if(strcmp(avrebiation,"ctra.")==0){
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+4]=temp_copy[i];
         }
 
@@ -174,7 +181,7 @@ void transform_abbreviations (char* str){
         str[8]='a';     
     }
     else if(strcmp(avrebiation,"g.")==0){
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+2]=temp_copy[i];
         }
 
@@ -182,21 +189,21 @@ void transform_abbreviations (char* str){
         str[0]='g'; str[1]='r'; str[2]='a'; str[3]='n'; 
     }
     else if(strcmp(avrebiation,"trav.")==0){
-        for(int i=0;i<strlen(str);i++){
+        for(size_t i=0;i<len;i++){
             str[i+5]=temp_copy[i];
         }
 
         //Substituimos la abrevacion
-        str[0]='T'; str[1]='r'; str[2]='a'; str[3]='v'; str[4]='e'; str[5]='s'; str[6]='s'; str[7]='e';
+        str[0]='t'; str[1]='r'; str[2]='a'; str[3]='v'; str[4]='e'; str[5]='s'; str[6]='s'; str[7]='e';
         str[8]='r';  str[9]='a';   
     }
     else if(strcmp(avrebiation,"pl.")==0){
-        for(int i=0;i<strlen(str);i++){
-            str[i+4]=temp_copy[i];
+        for(size_t i=0;i<len;i++){
+            str[i+3]=temp_copy[i];
         }
 
         //Substituimos la abrevacion
-        str[0]='p'; str[1]='l'; str[2]='a'; str[3]='ç'; str[4]='a';     
+        str[0]='p'; str[1]='l'; str[2]='a'; str[3]='c'; str[4]='a';     
     }
     
 
