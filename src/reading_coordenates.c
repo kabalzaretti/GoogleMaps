@@ -30,19 +30,32 @@ void sequential_search(Houses* houeses_list, char street[], int number){
     //Control variable to know if the street was founded but not the number
     int found = 0;
 
+    //Transforming street name in to lowercase
+    lowercase_transform(street);
+    //Transformin avrebiatiom into normal words
+    transform_abbreviations(street);
+    
+
     //Startintg to interated in linked list
     while(current != NULL){
 
         //Transforming street name in to lowercase
-        lowercase_transform(street);
 
         strcpy(temp_adress,current->street);
         lowercase_transform(temp_adress);
 
-        //Transformin avrebiatiom into normal words
-        transform_abbreviations(temp_adress);
+        //Debuggin
+        // printf("DEBUG: Comparando [%s] (len %lu) vs [%s] (len %lu)\n", 
+        // street, strlen(street), temp_adress, strlen(temp_adress));
 
+        // // Ver caracteres invisibles
+        // printf("DEBUG: ");
+        // for(size_t i = 0; i < strlen(street); i++) printf("%d ", street[i]);
+        // printf(" vs ");
+        // for(size_t i = 0; i < strlen(temp_adress); i++) printf("%d ", temp_adress[i]);
+        // printf("\n");
 
+        
         if(strcmp(street, temp_adress) == 0){
             found=1;
             if(number == current->number){
@@ -90,7 +103,8 @@ void origin_position(Houses *houses_list){
         char street[150];
         int number;
         printf("Enter street name (e.g. 'Carrer de Roc Boronat'): ");
-        scanf("%s",street);
+        scanf(" %[^\n]",street);
+        street[strcspn(street, "\n")] = '\0';
         
 
         printf("Enter street number (e.g. '138'): ");
@@ -199,7 +213,7 @@ void transform_abbreviations (char* str){
     }
     else if(strcmp(avrebiation,"pl.")==0){
         for(size_t i=0;i<=len;i++){
-            str[i+3]=temp_copy[i];
+            str[i+2]=temp_copy[i];
         }
 
         //Substituimos la abrevacion
